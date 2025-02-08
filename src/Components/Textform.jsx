@@ -83,6 +83,7 @@ function Textform(props) {
   );
 }
 export default Textform;
+// eslint-disable-next-line
 Textform.PropTypes={
   Heading: PropTypes.string,
 }

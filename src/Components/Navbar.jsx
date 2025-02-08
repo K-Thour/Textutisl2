@@ -5,7 +5,7 @@ function Navbar({ navbar, home, link, dropDown, disabled, Search,Mode,Switch,Val
   return (
     <nav className={`navbar navbar-expand-lg navbar-${Mode} bg-${Mode} navbar-light bg-light position-sticky`}>
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           {navbar}
         </a>
         <button
@@ -22,7 +22,7 @@ function Navbar({ navbar, home, link, dropDown, disabled, Search,Mode,Switch,Val
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 font-weight-bold">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
+              <a className="nav-link active" aria-current="page" href="/">
                 {home}
               </a>
              </li>
