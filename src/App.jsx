@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Textform from "./Components/Textform.jsx";
 import Navbar from "./Components/Navbar.jsx";
-// import About from "./Components/About.jsx";
+import About from "./Components/About.jsx";
 import "./App.css";
 import { useState } from "react";
 import Alert from "./Components/Alert.jsx";
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Speak_Listen from "./Components/Speak&Listen.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
   const [Button, setButton] = useState("");
@@ -13,6 +14,8 @@ function App() {
   const [mode, setMode] = useState("light");
   const [validity, setValidity] = useState("Enable");
   const [alert, setAlert] = useState(null);
+  const [Text,setText]=useState("");
+  let voices;
   let selectColor = (e) => {
     console.log(e.target.value);
     setColor(e.target.value);
@@ -43,35 +46,19 @@ function App() {
       setButton("true");
     }
   };
-  // const Router = createBrowserRouter([
-  //   {
-  //     path: "/",
-  //     element: (
-        
-  //     ),
-  //   },
-  //   {
-  //     path: "/about",
-  //     element: (
-  //       <>
-  //         <Navbar
-  //           navbar="TextUtilis"
-  //           home="home"
-  //           disabled="About"
-  //           Mode={mode}
-  //           Switch={toggle}
-  //           Validity={validity}
-  //           color={color}
-  //           selectColor={selectColor}
-  //           Button={Button}
-  //         />
-  //         <Alert alert={alert} /> <About Mode={mode} colour={color} />
-  //       </>
-  //     ),
-  //   },
-  // ]);
-  return (    
-    <>
+  window.addEventListener("load",()=>{
+    let value=localStorage.getItem("Text");
+    console.log(value);
+    setText(value);
+  })
+  useEffect(()=>{
+    voices = window.speechSynthesis.getVoices();
+  },[window.speechSynthesis.getVoices()])
+  const Router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <>
           <Navbar
             navbar="TextUtilis"
             home="home"
@@ -89,8 +76,59 @@ function App() {
             Mode={mode}
             showAlert={showAlert}
             color={color}
+            setText={setText}
+            Text={Text}
           />
         </>
+      ),
+    },
+    {
+      path: "/about",
+      element: (
+        <>
+          <Navbar
+            navbar="TextUtilis"
+            home="home"
+            disabled="About"
+            Mode={mode}
+            Switch={toggle}
+            Validity={validity}
+            color={color}
+            selectColor={selectColor}
+            Button={Button}
+          />
+          <Alert alert={alert} /> <About Mode={mode} colour={color} />
+        </>
+      ),
+    },
+    {
+      path:'/Speak',
+      element: (
+        <>
+          <Navbar
+            navbar="TextUtilis"
+            home="home"
+            disabled="About"
+            Mode={mode}
+            Switch={toggle}
+            Validity={validity}
+            color={color}
+            selectColor={selectColor}
+            Button={Button}
+          />
+          <Alert alert={alert} /> 
+          <Speak_Listen Mode={mode}
+            showAlert={showAlert}
+            color={color}
+            Text={Text}
+            setText={setText} 
+            voices={voices}/>
+        </>
+      )
+    }
+  ]);
+  return (    
+    <RouterProvider router={Router} />
   );
 }
 export default App;
